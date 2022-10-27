@@ -27,15 +27,16 @@
         @csrf
         <table class="table">
             <tr>
-                <th><label for=""> Product Description :</label><br>
-                    <input class="btn btn-info" type="text" name="ProductDescription" placeholder="nhập vào mô tả của sản phẩm."></th>
-                <th><label for="">  List Price :</label><br>
-                    <input class="btn btn-warning" type="text" name=" ListPrice" placeholder=" nhập vào giá."></th>
-                <th><label for="">Discount Percent :</label><br>
-                    <input class="btn btn-primary" type="text" name="DiscountPercent" placeholder=" nhập vào giá chiết khấu."></th>
-            </tr>
+                <th> Product Description :<br>
+                    <input class="btn btn-info" type="text" name="ProductDescription" placeholder="nhập vào mô tả của sản phẩm:"></th>
+                <th>  List Price :<br>
+                    <input class="btn btn-warning" type="number" name=" ListPrice" placeholder=" nhập vào giá:"></th>
+                <th>Discount Percent :<br>
+                    <input class="btn btn-primary" type="number" name="DiscountPercent" placeholder=" nhập vào giá chiết khấu:"></th>
 
-    <input class="btn btn-danger" type="submit" value=" Calculate Discount">
+
+            </tr>
+                <th><input class="btn btn-danger" type="submit" value=" Calculate Discount"></th>
 </form>
     </body>
     </html>

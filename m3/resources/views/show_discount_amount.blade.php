@@ -9,11 +9,11 @@
         rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 </head>
 <body>
-    <table>
+    <table  border="2">
         <thead>
         <tr>
-            <th class="btn btn-warning" >Discount Amount</th>
-            <th class="btn btn-info"  >Product Description</th>
+            <td class="btn btn-warning" >Discount Amount</td>
+            <td class="btn btn-info"  >Product Description</td>
         </tr>
         <tr>
            <th>{{$DiscountAmount}}</th>
@@ -21,6 +21,7 @@
         </tr>
     </thead>
     </table>
+
 
 </body>
 </html>
