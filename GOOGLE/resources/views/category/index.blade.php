@@ -1,15 +1,28 @@
 @extends('layout.master')
 @section('content')
-<div class="col-lg-12 grid-margin stretch-card">
+
     <div class="card">
       <div class="card-body">
         <h4 class="card-title">
             Display board</h4>
         <p class="card-description">
-          Add class <code>.table-dark</code>
+          Add class <code>.table-categories</code>
         </p>
-          <a class="btn btn-info" href="{{route('category.create')}}">Thêm</a>
-        <p></p>
+        <form class="navbar-form navbar-left"  action="{{ route('category.search') }}" method="GET">
+            @csrf
+            <div class="row">
+                <div class="col-3">
+                    <div class="form-group">
+                        <input type="text" name="search" class="form-control" placeholder="Search">
+                    </div>
+                </div>
+                <div class="col-4">
+                    <button type="submit" class="btn btn-info">Tìm kiếm</button>
+                </div>
+            </div>
+        </form>
+          <a class="btn btn-warning" href="{{route('category.create')}}">Thêm</a>
+
         <div class="table-responsive pt-3">
           <table class="table table-info">
             <thead>
@@ -54,9 +67,11 @@
         @endforeach
 
             </tbody>
+            <tr>{{ $categories->appends(request()->query()) }}</tr>
           </table>
         </div>
       </div>
     </div>
   </div>
+
   @endsection

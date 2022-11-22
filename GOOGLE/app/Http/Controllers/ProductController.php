@@ -15,14 +15,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products =Product::get();
-        $categories = Category::all();
-        $param = [
-            'categories' => $categories,
-            'products' => $products,
-        ];
+        $products = Product::with('category')->paginate(3);
 
-        return view('product.index', $param);
+        return view('product.index',compact(['products']));
     }
 
     /**
@@ -32,11 +27,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $products=Product::get();
-        $param = [
-            'product' => $products
-        ];
-        return view('product.add', $param);
+        $category = Category::all();
+        return view('product.add', compact(['category']));
     }
 
     /**
@@ -47,17 +39,32 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'slug' => 'required',
+            'status' => 'required',
+            'price' => 'required',
+            'category_id' => 'required',
+        ],
+            [
+                'name.required'=>'Không được để trống',
+                'description.required'=>'Không được để trống',
+                'slug.required'=>'Không được để trống',
+                'status.required'=>'Không được để trống',
+                'price.required'=>'Không được để trống',
+                'category_id.required'=>'Không được để trống',
+            ]);
         $product = new Product();
         $product->name = $request->name;
+        $product->slug = $request->slug;
         $product->price = $request->price;
-        $product->amount = $request->amount;
         $product->description = $request->description;
-        $product->category_id = $request->category_id;
-        $product->size = $request->size;
-        $product->color = $request->color;
+        $product->status = $request->status;
+        $product->category_id  = $request->category_id ;
         if ($request->hasFile('image')) {
             $get_image = $request->file('image');
-            $path = 'images/product/';
+            $path = 'public\uploads\product';
             $get_name_image = $get_image->getClientOriginalName();
             $name_image = current(explode('.', $get_name_image));
             $new_image = $name_image . rand(0, 99) . '.' . $get_image->getClientOriginalExtension();
@@ -65,7 +72,9 @@ class ProductController extends Controller
             $product->image = $new_image;
             $data['product_image'] = $new_image;
         }
+        // dd($product);
         $product->save();
+        // alert()->success('Thêm sản phẩm','thành công');
         return redirect()->route('product.index');
     }
 
@@ -83,7 +92,7 @@ class ProductController extends Controller
         ];
 
         // $productshow-> show();
-        return view('admin.product.show',  $param );
+        return view('product.show',  $param );
     }
 
     /**
@@ -95,12 +104,8 @@ class ProductController extends Controller
     public function edit($id)
     {
         $product = Product::find($id);
-        $categories=Category::get();
-        $param = [
-            'product' => $product ,
-            'categories' => $categories
-        ];
-        return view('admin.product.edit' , $param);
+        $categories = Category::get();
+        return view('product.edit', compact(['product','categories']));
     }
 
     /**
@@ -115,19 +120,19 @@ class ProductController extends Controller
 
         $product = Product::find($id);
         $product->name = $request->name;
+        $product->slug = $request->slug;
         $product->price = $request->price;
-        $product->amount = $request->amount;
         $product->description = $request->description;
-        $product->category_id = $request->category_id;
-        $product->size = $request->size;
-        $product->color = $request->color;
+        $product->status = $request->status;
+        $product->category_id  = $request->category_id ;
+
         $get_image=$request->image;
         if($get_image){
-            $path='public/uploads/product/'.$product->image;
+            $path='public\uploads\product'.$product->image;
             if(file_exists($path)){
                 unlink($path);
             }
-        $path='public/uploads/product/';
+        $path='public\uploads\product';
         $get_name_image=$get_image->getClientOriginalName();
         $name_image=current(explode('.',$get_name_image));
         $new_image=$name_image.rand(0,99).'.'.$get_image->getClientOriginalExtension();
@@ -152,5 +157,14 @@ class ProductController extends Controller
         $product->delete();
         return redirect()->route('product.index');
 
+    }
+    public function search(Request $request)
+    {
+    $search = $request->input('search_product');
+    if (!$search) {
+        return redirect()->route('product.index');
+    }
+    $products = Product::where('name', 'LIKE', '%' . $search . '%')->paginate(5);
+    return view('product.index', compact('products'));
     }
 }

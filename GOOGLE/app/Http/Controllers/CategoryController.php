@@ -15,7 +15,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-      $categories = Category::get();
+      $categories = Category::paginate(3);
       $param =[
         'categories'=> $categories
       ];
@@ -40,13 +40,31 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $validated = $request->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'slug' => 'required',
+            'status' => 'required',
+        ],
+            [
+                'name.required'=>'Không được để trống',
+                'description.required'=>'Không được để trống',
+                'slug.required'=>'Không được để trống',
+                'status.required'=>'Không được để trống',
+            ]
+            // $.ajax(option)
+            // alertify.success('Cập nhật thành công');
+
+    );
         $category = new Category();
         $category->name = $request->name;
         $category->description = $request->description;
         $category->slug = $request->slug;
         $category->status = $request->status;
         $category->save($request->all());
-        return redirect('home');
+        // return redirect('home');
+        return redirect()->route('category.index');
+
 
     }
 
@@ -82,15 +100,16 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $categories = Category::find($id);
-        $categories->name = $request->name;
-        $categories->description = $request->description;
-        $categories->status = $request->status;
-        $categories->slug = $request->slug;
-        $categories->save();
+    $categories = Category::find($id);
+    $categories->name = $request->name;
+    $categories->description = $request->description;
+    $categories->status = $request->status;
+    $categories->slug = $request->slug;
+    $categories->save();
 
-        return redirect('home');
-    }
+    // return redirect('home');
+    return redirect()->route('category.index');
+}
 
     /**
      * Remove the specified resource from storage.
@@ -101,6 +120,17 @@ class CategoryController extends Controller
     public function destroy($id)
     {
         Category::find($id)->delete();
-        return redirect('home');
+        // return redirect('home');
+        return redirect()->route('category.index');
+
+    }
+    public function search(Request $request)
+    {
+    $search = $request->input('search');
+    if (!$search) {
+        return redirect()->route('category.index');
+    }
+    $categories = Category::where('name', 'LIKE', '%' . $search . '%')->paginate(5);
+    return view('category.index', compact('categories'));
     }
 }

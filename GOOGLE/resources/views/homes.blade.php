@@ -19,10 +19,7 @@
                     <div class="row">
                       <div class="col-12">
                         <div class="row">
-                          <div class="col-lg-6">
-                            <div id="circleProgress6" class="progressbar-js-circle rounded p-3"></div>
-                          </div>
-                          <div class="col-lg-6">
+                          <div class="col-lg-9">
                             <ul class="session-by-channel-legend">
                               <li>
                                 <div>Firewalls(3)</div>

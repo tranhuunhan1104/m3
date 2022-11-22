@@ -29,17 +29,17 @@
         step: function(state, circle) {
           circle.path.setAttribute('stroke', state.color);
           circle.path.setAttribute('stroke-width', state.width);
-  
+
           var value = '<p class="text-center mb-0">Score</p>' + Math.round(circle.value() * 100) + "%";
           if (value === 0) {
             circle.setText('');
           } else {
             circle.setText(value);
           }
-  
+
         }
       });
-  
+
       bar.text.style.fontSize = '1.875rem';
       bar.text.style.fontWeight = '700';
       bar.animate(.75); // Number from 0.0 to 1.0
@@ -69,17 +69,17 @@
         step: function(state, circle) {
           circle.path.setAttribute('stroke', state.color);
           circle.path.setAttribute('stroke-width', state.width);
-  
+
           var value = '<p class="text-center mb-0">Score</p>' + Math.round(circle.value() * 100) + "%";
           if (value === 0) {
             circle.setText('');
           } else {
             circle.setText(value);
           }
-  
+
         }
       });
-  
+
       bar.text.style.fontSize = '1.875rem';
       bar.text.style.fontWeight = '700';
       bar.animate(.75); // Number from 0.0 to 1.0
@@ -166,7 +166,7 @@
           backgroundColor: 'rgba(2, 171, 254, 1)',
       }
   };
-  
+
   if ($("#eventChart").length) {
     var lineChartCanvas = $("#eventChart").get(0).getContext("2d");
     var saleschart = new Chart(lineChartCanvas, {
@@ -254,7 +254,7 @@
           backgroundColor: 'rgba(2, 171, 254, 1)',
       }
   };
-  
+
   if ($("#salesanalyticChart").length) {
     var lineChartCanvas = $("#salesanalyticChart").get(0).getContext("2d");
     var saleschart = new Chart(lineChartCanvas, {
@@ -552,7 +552,7 @@
                 'rgba(242,18,94)',
             ],
             borderWidth: 2,
-            fill: true, 
+            fill: true,
         }]
     };
 

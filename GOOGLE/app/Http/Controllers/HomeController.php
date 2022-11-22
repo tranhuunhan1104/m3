@@ -22,6 +22,9 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
+    public function help(){
+        return view('help');
+    }
     public function index()
     {
 

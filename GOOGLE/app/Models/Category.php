@@ -20,8 +20,8 @@ class Category extends Model
     // {
     //     return $this->hasMany(Attributes::class);
     // }
-    // public function product()
-    // {
-    //     return $this->hasMany(Products::class);
-    // }
+    public function product()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
